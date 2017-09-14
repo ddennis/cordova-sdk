@@ -1,6 +1,6 @@
 # AllUnite Cordova SDK
 
-Cordova plugin for iOS and Android to use AllUnite SDK in a Cordova application.
+Cordova plugin for iOS and Android in order to use AllUnite SDK within a Cordova application.
 
 The plugin is currently in development. As a consequence the plugin API may change without notice until it reaches a stable form.
 
@@ -40,7 +40,7 @@ Added AllUnite SDK plugin to android|ios platform.
 
 ### iOS
 
-To only build the app: ```cordova build ios```
+To build only the app: ```cordova build ios```
 
 To run on an iPhone simulator (won't be able to detect beacons but allows to check that everything runs as expected) ```cordova emulate ios```
 
@@ -48,7 +48,7 @@ To launch the app on a device, plug a device, then ```cordova run ios```
 
 ### Android
 
-To only build the app: ```cordova build android```
+To build only the app: ```cordova build android```
 
 To run on an Android simulator (won't be able to detect beacons but allows to check that everything runs as expected): ```cordova emulate android```
 
@@ -58,9 +58,9 @@ To launch the app on a device, plug a device, then ```cordova run android```
 
 1. Open cordova ios project in XCode (<projectname>.xcworkspace)
 2. Open project manifest file *-Info.plist and set yours description values for keys: ```NSBluetoothPeripheralUsageDescription, NSLocationAlwaysUsageDescription, NSLocationUsageDescription``` 
-For key ```CFBundleURLSchemes``` change from default scheme named ```allunite-sdk``` to yours, registered for your accountId and accountKey
-3. Find config file ```AlluniteSdkConfig.plist``` in project structure and change values for keys ```accountId``` and ```accountKey``` to yours.
-Example for CordovaDemo account:
+For the key ```CFBundleURLSchemes``` change from default scheme named ```allunite-sdk``` to yours, registered for your accountId and accountKey
+3. Find config file ```AlluniteSdkConfig.plist``` in the project structure and change values for keys ```accountId``` and ```accountKey``` to yours.
+Example for the CordovaDemo account:
 ``` xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -79,14 +79,12 @@ Example for CordovaDemo account:
 2. Open project manifest file.
 3. Add intent filter for main activity for listening your deep link:
 ```
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
+<intent-filter>
+    <action android:name="android.intent.action.VIEW" />
+	    <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
                 <data
                     android:host="main"
                     android:scheme="all-unite-demo-cordova" />
-            </intent-filter>
+</intent-filter>
 ```
