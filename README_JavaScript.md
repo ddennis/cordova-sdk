@@ -11,10 +11,9 @@ function initDevice(){
     var failure = function() {
         alert("Error calling");
     }
-    AlluniteSDK.initSdk("your accountId", "your accountKey", success, failure);
+    AlluniteSDK.initSdk(success, failure);
 }
 ```
-Parameters "your accountId" and "your accountKey" are ignored in iOS.
 ## Detect SDK state
 ```
 function isSdkEnabled(){
