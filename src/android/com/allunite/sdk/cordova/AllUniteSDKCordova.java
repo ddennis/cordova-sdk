@@ -8,8 +8,6 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
-import java.lang.String;
-
 import com.allunite.sdk.AllUniteSdk;
 import com.allunite.sdk.callbacks.IActionListener;
 import com.allunite.sdk.service.BCService;
@@ -46,37 +44,43 @@ public class AllUniteSDKCordova extends CordovaPlugin {
 
         } else if (action.equals("bindDevice")) {
             AllUniteSdk.bindDevice(getContext(), "");
+            callbackContext.success();
 
         } else if (action.equals("setSdkEnabled")) {
             boolean enabled = args.getBoolean(0);
             AllUniteSdk.setSdkEnabled(getContext(), enabled);
+            callbackContext.success();
 
         } else if (action.equals("isSdkEnabled")) {
-	    callbackContext.success(String.valueOf(StorageUtils.loadBoolean(getContext(), "isEnabled")));
-         
+            callbackContext.success(String.valueOf(StorageUtils.loadBoolean(getContext(), "isEnabled")));
+
         } else if (action.equals("startBeaconTracking")) {
             StartServicesHelper.startServices(getContext());
+            callbackContext.success();
 
         } else if (action.equals("stopBeaconTracking")) {
             getContext().stopService(new Intent(getContext(), BCService.class));
+            callbackContext.success();
 
         } else if (action.equals("trackWithCategory")) {
             String actionCategory = args.getString(0);
             String actionId = args.getString(1);
             if (actionCategory != null && actionId != null) {
                 AllUniteSdk.track(getContext(), actionCategory, actionId);
+                callbackContext.success();
             }
-	} else if (action.equals("requestLocationPermission")) {
-            requestLocationPermission();
-	} else {
+        } else if (action.equals("requestLocationPermission")) {
+            checkLocationPermission();
+        } else {
             Log.e("AllUniteSDKCordova", "Unknown action received (action = " + action + ")");
+            callbackContext.error("unknown action");
             return false;
         }
 
         return true;
     }
 
-    private void requestLocationPermission() {
+    private void checkLocationPermission() {
         if (!isLocationPermissionGranted())
             requestLocationPermission();
     }
@@ -111,4 +115,5 @@ public class AllUniteSDKCordova extends CordovaPlugin {
         StartServicesHelper.startServices(getContext());
     }
 }
+
 
