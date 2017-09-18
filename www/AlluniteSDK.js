@@ -1,10 +1,13 @@
 var AlluniteSDK = {
 
-    initSdk: function(accountId, acountKey, successCallback, errorCallback) {
-//        if(device.platform === 'Android') {
-//            cordova.exec(successCallback, errorCallback, "AlluniteSDKCordova", "initSdk", [accountId, acountKey]);
-//        }
-        cordova.exec(successCallback, errorCallback, "AlluniteSDKCordova", "initSdk", [accountId, acountKey]);
+    initSdk: function(successCallback, errorCallback) {
+        cordova.exec(successCallback, errorCallback, "AlluniteSDKCordova", "initSdk", []);
+    },
+    
+    requestLocationPermission: function (successCallback, errorCallback) {
+        if(device.platform === 'Android') {
+            cordova.exec(successCallback, errorCallback, "AlluniteSDKCordova", "requestLocationPermission", []);
+        }
     },
 
     isSdkEnabled: function (successCallback, errorCallback) {

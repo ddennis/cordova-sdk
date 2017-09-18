@@ -39,7 +39,7 @@ var app = {
             var failure = function() {
                 alert("Error calling");
             }
-            AlluniteSDK.initSdk("CordovaDemo", "CA16C4FE98CF47AAB7B56137E9E3D7C1", success, failure);
+            AlluniteSDK.initSdk(success, failure);
         }
         
         document.getElementById("isSdkEnabledButtonId").addEventListener("click", isSdkEnabled);

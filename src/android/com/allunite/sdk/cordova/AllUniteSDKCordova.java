@@ -8,6 +8,8 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
+import java.lang.String;
+
 import com.allunite.sdk.AllUniteSdk;
 import com.allunite.sdk.callbacks.IActionListener;
 import com.allunite.sdk.service.BCService;
@@ -20,16 +22,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 public class AllUniteSDKCordova extends CordovaPlugin {
-
-    @Override
-    public void pluginInitialize() {
-
-    }
-
-    public void onStart() {
-        if (!isLocationPermissionGranted())
-            requestLocationPermission();
-    }
 
     @Override
     public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
@@ -60,8 +52,8 @@ public class AllUniteSDKCordova extends CordovaPlugin {
             AllUniteSdk.setSdkEnabled(getContext(), enabled);
 
         } else if (action.equals("isSdkEnabled")) {
-            return StorageUtils.loadBoolean(getContext(), "isEnabled");
-
+	    callbackContext.success(String.valueOf(StorageUtils.loadBoolean(getContext(), "isEnabled")));
+         
         } else if (action.equals("startBeaconTracking")) {
             StartServicesHelper.startServices(getContext());
 
@@ -74,13 +66,19 @@ public class AllUniteSDKCordova extends CordovaPlugin {
             if (actionCategory != null && actionId != null) {
                 AllUniteSdk.track(getContext(), actionCategory, actionId);
             }
-
-        } else {
+	} else if (action.equals("requestLocationPermission")) {
+            requestLocationPermission();
+	} else {
             Log.e("AllUniteSDKCordova", "Unknown action received (action = " + action + ")");
             return false;
         }
 
         return true;
+    }
+
+    private void requestLocationPermission() {
+        if (!isLocationPermissionGranted())
+            requestLocationPermission();
     }
 
     private Context getContext() {
