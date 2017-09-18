@@ -88,3 +88,12 @@ Example for the CordovaDemo account:
                     android:scheme="all-unite-demo-cordova" />
 </intent-filter>
 ```
+4. Add your app credentials to application:
+```
+        <meta-data
+            android:name="AllUniteId"
+            android:value="CordovaDemo" />
+        <meta-data
+            android:name="AllUniteKey"
+            android:value="CA16C4FE98CF47AAB7B56137E9E3D7C1" />
+```
