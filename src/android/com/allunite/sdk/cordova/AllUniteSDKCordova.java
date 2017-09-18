@@ -9,6 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 
 import com.allunite.sdk.AllUniteSdk;
+import com.allunite.sdk.callbacks.IActionListener;
 import com.allunite.sdk.service.BCService;
 import com.allunite.sdk.service.StartServicesHelper;
 import com.allunite.sdk.utils.StorageUtils;
@@ -31,22 +32,32 @@ public class AllUniteSDKCordova extends CordovaPlugin {
     }
 
     @Override
-    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+    public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
         Log.d("AllUniteSDKCordova", "execute: action = " + action + " # args = " + args.length());
 
         if (action.equals("initSdk")) {
-            String accountId = args.getString(0);
-            String accountKey = args.getString(1);
-            if (accountId != null && accountKey != null) {
-                AllUniteSdk.init(getContext(), accountId, accountKey);
-            }
+            AllUniteSdk.init(getContext(), null, null, new IActionListener() {
+                @Override
+                public void onStart() {
+                }
+
+                @Override
+                public void onSuccess() {
+                    callbackContext.success();
+                }
+
+                @Override
+                public void onError() {
+                    callbackContext.error("initSdk error");
+                }
+            });
 
         } else if (action.equals("bindDevice")) {
             AllUniteSdk.bindDevice(getContext(), "");
-           
+
         } else if (action.equals("setSdkEnabled")) {
-           boolean enabled = args.getBoolean(0);
-	   AllUniteSdk.setSdkEnabled(getContext(), enabled);
+            boolean enabled = args.getBoolean(0);
+            AllUniteSdk.setSdkEnabled(getContext(), enabled);
 
         } else if (action.equals("isSdkEnabled")) {
             return StorageUtils.loadBoolean(getContext(), "isEnabled");
@@ -102,3 +113,4 @@ public class AllUniteSDKCordova extends CordovaPlugin {
         StartServicesHelper.startServices(getContext());
     }
 }
+
