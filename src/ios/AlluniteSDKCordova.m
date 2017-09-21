@@ -62,6 +62,32 @@
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
 }
 
+- (void)requestLocationPermission:(CDVInvokedUrlCommand*)command
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        AllUniteSdkManager* alluniteSdk = [AllUniteSdkManager sharedInstance];
+        
+        [alluniteSdk requestAutorizationStatus:^(CLAuthorizationStatus status) {
+            if (status == kCLAuthorizationStatusNotDetermined) {
+                return;
+            }
+            
+            if (status != kCLAuthorizationStatusAuthorizedAlways
+                && status != kCLAuthorizationStatusAuthorizedWhenInUse) {
+                
+                NSLog(@"%@. App don't have permission using CoreLocation", [self TAG]);
+                
+                CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+                [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+                return;
+            }
+            
+            CDVPluginResult* pluginResult = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+            [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+        }];
+    });
+}
+
 - (void)isSdkEnabled:(CDVInvokedUrlCommand*)command {
     dispatch_async(dispatch_get_main_queue(), ^{
         AllUniteSdkManager* alluniteSdk = [AllUniteSdkManager sharedInstance];

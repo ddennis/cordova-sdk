@@ -4,6 +4,7 @@
 
 
 - (void)initSdk:(CDVInvokedUrlCommand*)command;
+- (void)requestLocationPermission:(CDVInvokedUrlCommand*)command;
 - (void)isSdkEnabled:(CDVInvokedUrlCommand*)command;
 - (void)setSdkEnabled:(CDVInvokedUrlCommand*)command;
 - (void)trackWithCategory:(CDVInvokedUrlCommand*)command;

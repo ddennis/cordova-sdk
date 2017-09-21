@@ -42,6 +42,20 @@ var app = {
             AlluniteSDK.initSdk(success, failure);
         }
         
+        document.getElementById("requestPermisionButtonId").addEventListener("click", requestPermision);
+        function requestPermision(){
+            alert("requestPermision")
+            var success = function(message) {
+                alert(message);
+            }
+            
+            var failure = function() {
+                alert("Error calling");
+            }
+            AlluniteSDK.requestLocationPermission(success, failure);
+        }
+        
+        
         document.getElementById("isSdkEnabledButtonId").addEventListener("click", isSdkEnabled);
         function isSdkEnabled(){
             alert("isSdkEnabled")
