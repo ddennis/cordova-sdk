@@ -83,7 +83,7 @@ var app = {
         
         document.getElementById("trackWithCategotyButtonId").addEventListener("click", trackWithCategory);
         function trackWithCategory(){
-            alert("setSdkEnabled")
+            alert("trackWithCategory")
             var success = function(message) {
                 alert(message);
             }
