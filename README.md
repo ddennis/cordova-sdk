@@ -75,7 +75,7 @@ Example for the CordovaDemo account:
 ```
 
 # Android cordova project
-1. Open cordova Android project in XCode.
+1. Open cordova Android project in Android Studio.
 2. Open project manifest file.
 3. Add intent filter for main activity for listening your deep link:
 ```
